@@ -38,3 +38,32 @@ app.post('/todos', async (req, res) => {
     }
 })
 
+
+app.put('/todos/:id', async (req, res) => {
+    // update one record
+    const { id } = req.params
+    const { todo } = req.body
+    console.log("updated")
+    const data = await Todo.findOneAndUpdate({ _id: id }, todo)
+    if (data) {
+        res.status(200).json(data)
+    }
+    else {
+        res.status(400).json({ err: "error" })
+    }
+})
+
+
+app.delete('/todos/:id', async (req, res) => {
+    // delete one record
+    console.log("deleted")
+    const { id } = req.params
+    const data = await Todo.findOneAndDelete({ _id: id })
+    console.log(data)
+    if (data) {
+        res.status(200).json(data)
+    }
+    else {
+        res.status(400).json({ err: "error" })
+    }
+})
